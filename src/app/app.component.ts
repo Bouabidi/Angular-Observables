@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Country } from './shared/country';
-import { CountryService } from './shared/country.service';
+import { Smartphone } from './shared/smartphone';
+import { SmartphoneService } from './shared/smartphone.service';
 import { tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -12,22 +12,18 @@ import { tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operato
 export class AppComponent implements OnInit {
   // tslint:disable-next-line:no-inferrable-types
   loading: boolean = false;
-  countries$: Observable<Country[]>;
-  private searchTerms = new Subject<string>();
+  smartphone: Smartphone[] = [];
 
-  constructor(private countryService: CountryService) { }
-
-  search(term: string) {
-    this.searchTerms.next(term);
+  constructor(private smartphoneService: SmartphoneService) { }
+  getSmartphones() {
+    this.smartphoneService.getSmartphone()
+      .subscribe(data => {
+        this.smartphone = data;
+        console.log(this.smartphone);
+      });
   }
 
   ngOnInit(): void {
-    this.countries$ = this.searchTerms.pipe(
-      tap(count => this.loading = true),
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((term: string) => this.countryService.searchCountry(term)),
-      tap(count => this.loading = false)
-    )
+    this.getSmartphones();
   }
 }

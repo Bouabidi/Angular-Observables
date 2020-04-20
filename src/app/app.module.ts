@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CountryService } from './shared/country.service';
+import { SmartphoneService } from './shared/smartphone.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { CountryService } from './shared/country.service';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [CountryService],
+  providers: [SmartphoneService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
